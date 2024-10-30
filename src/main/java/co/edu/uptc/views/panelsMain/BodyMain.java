@@ -1,20 +1,22 @@
 package co.edu.uptc.views.panelsMain;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.dialogs.DialogPlay;
 
 public class BodyMain extends JPanel{
-    
-    public BodyMain() {
+
+    public MainView mainView;
+    public DialogPlay dialogPlay;
+
+    public BodyMain(MainView mainView) {
+        this.mainView = mainView;
         initFrame();
         addButtons();
         begin();
@@ -60,7 +62,7 @@ public class BodyMain extends JPanel{
     }
 
     private void initDialogPlay() {
-        DialogPlay dialogPlay = new DialogPlay();
+        dialogPlay = new DialogPlay(this);
         dialogPlay.begin();
     }
     

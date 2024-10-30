@@ -1,15 +1,18 @@
 package co.edu.uptc.views;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
+
 import javax.swing.JFrame;
 import co.edu.uptc.interfaces.Contract;
+import co.edu.uptc.views.dialogs.panelsPlay.DisplacementPlay;
 import co.edu.uptc.views.panelsMain.BodyMain;
 import co.edu.uptc.views.panelsMain.HeaderMain;
 
 public class MainView extends JFrame implements Contract.View{
 
     public Contract.Presenter presenter;
-
+    public BodyMain bodyMain;
 
     public MainView() {
         initFrame();
@@ -36,7 +39,7 @@ public class MainView extends JFrame implements Contract.View{
     }
 
     private void createBodyMain() {
-        BodyMain bodyMain = new BodyMain();
+        bodyMain = new BodyMain(this);
         this.add(bodyMain, BorderLayout.CENTER);
     }
 
@@ -49,5 +52,11 @@ public class MainView extends JFrame implements Contract.View{
     public void setPresenter(Contract.Presenter presenter) {
         this.presenter = presenter;
 
+    }
+
+    @Override
+    public void updatePosition(Point point) {
+        DisplacementPlay displacementPlay = new DisplacementPlay(bodyMain.dialogPlay);
+        displacementPlay.updatePosition(point);
     }
 }
