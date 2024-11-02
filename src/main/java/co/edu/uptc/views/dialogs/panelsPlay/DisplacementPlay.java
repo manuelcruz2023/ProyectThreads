@@ -4,20 +4,23 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.List;
 
 import javax.swing.JPanel;
-import co.edu.uptc.views.dialogs.DialogPlay;
+
+import co.edu.uptc.models.Ship;
+import co.edu.uptc.views.MainView;
 
 public class DisplacementPlay extends JPanel {
 
-    private Point point = new Point(100, 100);
-    public DialogPlay dialogPlay;
+    public MainView mainView;
+    private Point point;
+    private List<Ship> ships;
 
-    public DisplacementPlay(DialogPlay dialogPlay) {
-        this.dialogPlay = dialogPlay;
+    public DisplacementPlay(MainView mainView) {
+        this.mainView = mainView;
         initFrame();
         begin();
-        move();
     }
 
     public void initFrame() {
@@ -31,12 +34,13 @@ public class DisplacementPlay extends JPanel {
 
     @Override
     public void paint(Graphics g) {
+        ships = mainView.presenter.createShips();
         super.paint(g);
-        g.drawOval(point.x, point.y, 30, 30);
-    }
-
-    private void move() {
-        this.dialogPlay.bodyMain.mainView.presenter.moveX();
+        if (ships != null) {
+            for (Ship ship : ships) {
+                g.drawOval(ship.getPoint().x, ship.getPoint().y, 30, 30);
+            }
+        }
     }
 
     public void updatePosition(Point point) {

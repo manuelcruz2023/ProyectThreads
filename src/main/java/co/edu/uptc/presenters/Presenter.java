@@ -1,10 +1,13 @@
 package co.edu.uptc.presenters;
 
+import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
 
 import co.edu.uptc.interfaces.Contract;
 import co.edu.uptc.interfaces.Contract.Model;
 import co.edu.uptc.interfaces.Contract.View;
+import co.edu.uptc.models.Ship;
 
 public class Presenter implements Contract.Presenter {
 
@@ -22,13 +25,23 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public void moveX() {
-        model.moveX();
+    public void changePosition(Point point) {
+        view.updatePosition(point);
     }
 
     @Override
-    public void changePosition(Point point) {
-        view.updatePosition(point);
+    public Dimension getScreenSize() {
+        return view.screenSize();
+    }
+
+    @Override
+    public List<Ship> createShips() {
+        return model.createShips();
+    }
+
+    @Override
+    public int getNumberOfShips() {
+        return view.numberOfShips();
     }
     
 }

@@ -2,22 +2,21 @@ package co.edu.uptc.views.dialogs;
 
 import javax.swing.JDialog;
 
+import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.dialogs.panelsPlay.DisplacementPlay;
 import co.edu.uptc.views.dialogs.panelsPlay.HeaderPlay;
 import co.edu.uptc.views.dialogs.panelsPlay.InformationPlay;
-import co.edu.uptc.views.panelsMain.BodyMain;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class DialogPlay extends JDialog {
 
-    public BodyMain bodyMain;
     public DisplacementPlay displacementPlay;
+    public MainView mainView;
     
-    public DialogPlay(BodyMain bodyMain) {
-        this.bodyMain = bodyMain;
+    public DialogPlay(MainView mainView) {
+        this.mainView = mainView;
         initFrame();
         addPanels();
     }
@@ -41,7 +40,7 @@ public class DialogPlay extends JDialog {
     }
 
     private void createDisplacementPlay() {
-        displacementPlay = new DisplacementPlay(this);
+        displacementPlay = new DisplacementPlay(mainView);
         this.add(displacementPlay,  BorderLayout.CENTER);
     }
 
