@@ -4,7 +4,6 @@ import javax.swing.JDialog;
 
 import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.dialogs.panelsPlay.DisplacementPlay;
-import co.edu.uptc.views.dialogs.panelsPlay.HeaderPlay;
 import co.edu.uptc.views.dialogs.panelsPlay.InformationPlay;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,13 +33,8 @@ public class DialogPlay extends JDialog {
         this.setVisible(true);
     }
 
-    private void createHeaderPlay() {
-        HeaderPlay headerPlay = new HeaderPlay();
-        this.add(headerPlay, BorderLayout.NORTH);
-    }
-
     private void createDisplacementPlay() {
-        displacementPlay = new DisplacementPlay(mainView);
+        displacementPlay = new DisplacementPlay(mainView, "src\\main\\java\\co\\edu\\uptc\\images\\fondoJuego.jpg");
         this.add(displacementPlay,  BorderLayout.CENTER);
     }
 
@@ -50,7 +44,6 @@ public class DialogPlay extends JDialog {
     }
 
     private void addPanels() {
-        createHeaderPlay();
         createDisplacementPlay();
         createInformationPlay();
     }

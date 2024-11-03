@@ -25,8 +25,8 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public void changePosition(Point point) {
-        view.updatePosition(point);
+    public void changePosition() {
+        view.updatePosition();
     }
 
     @Override

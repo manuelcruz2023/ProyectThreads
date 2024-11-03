@@ -109,9 +109,9 @@ public class MainView extends JFrame implements Contract.View {
     }
 
     @Override
-    public void updatePosition(Point point) {
+    public void updatePosition() {
         if (dialogPlay != null) {
-            dialogPlay.displacementPlay.updatePosition(point);
+            dialogPlay.displacementPlay.updatePosition();
         }
     }
 

@@ -1,7 +1,8 @@
 package co.edu.uptc.models;
 
 import java.awt.Point;
-import java.util.List;
+
+import co.edu.uptc.utils.UtilThread;
 
 public class Ship {
     private Point point;
@@ -21,5 +22,12 @@ public class Ship {
     }
     public void setThread(Thread thread) {
         this.thread = thread;
+    }
+
+    public void moveShipsInX(int limitX) {
+        while(point.x < limitX) {
+            point.x++;
+            UtilThread.sleep(100);
+        }
     }
 }

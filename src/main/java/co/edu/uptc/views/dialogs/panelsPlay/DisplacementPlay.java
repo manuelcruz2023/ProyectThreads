@@ -1,30 +1,24 @@
 package co.edu.uptc.views.dialogs.panelsPlay;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import co.edu.uptc.models.Ship;
 import co.edu.uptc.views.MainView;
+import co.edu.uptc.views.resourcesView.BackgroundPanel;
 
-public class DisplacementPlay extends JPanel {
+import java.awt.*;
+import java.util.List;
 
-    public MainView mainView;
-    private Point point;
+public class DisplacementPlay extends BackgroundPanel {
+    private MainView mainView;
     private List<Ship> ships;
 
-    public DisplacementPlay(MainView mainView) {
+    public DisplacementPlay(MainView mainView, String backgroundImagePath) {
+        super(backgroundImagePath); // Llama al constructor de BackgroundPanel con la ruta de la imagen
         this.mainView = mainView;
         initFrame();
         begin();
     }
 
     public void initFrame() {
-        this.setBackground(new Color(98, 149, 132));
         this.setPreferredSize(new Dimension(400, 150));
     }
 
@@ -33,18 +27,22 @@ public class DisplacementPlay extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
-        ships = mainView.presenter.createShips();
-        super.paint(g);
-        if (ships != null) {
-            for (Ship ship : ships) {
-                g.drawOval(ship.getPoint().x, ship.getPoint().y, 30, 30);
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g); // Llama a la implementación de BackgroundPanel para dibujar la imagen de fondo
+    
+            // Dibuja los barcos
+            if (ships == null) {
+                ships = mainView.presenter.createShips();
+            }
+            if (ships != null) {
+                for (Ship ship : ships) {
+                    g.setColor(Color.WHITE);
+                    g.drawOval(ship.getPoint().x, ship.getPoint().y, 30, 30);
+                }
             }
         }
-    }
 
-    public void updatePosition(Point point) {
-        this.point = point;
+    public void updatePosition() {
         repaint();
     }
 }
