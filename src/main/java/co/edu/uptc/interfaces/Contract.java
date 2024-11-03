@@ -13,6 +13,7 @@ public interface Contract {
         public void setPresenter(Contract.Presenter presenter);
         public void begin();
         public int numberOfShips();
+        public int setVelocity();
         public void updatePosition();
         public Dimension screenSize();
     }
@@ -21,6 +22,7 @@ public interface Contract {
         public void setView(Contract.View view);
         public void setModel(Contract.Model model);
         public int getNumberOfShips();
+        public int getVelocity();
         public void changePosition();
         public Dimension getScreenSize();
         public List<Ship> createShips();

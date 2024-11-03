@@ -43,5 +43,10 @@ public class Presenter implements Contract.Presenter {
     public int getNumberOfShips() {
         return view.numberOfShips();
     }
+
+    @Override
+    public int getVelocity() {
+        return view.setVelocity();
+    }
     
 }

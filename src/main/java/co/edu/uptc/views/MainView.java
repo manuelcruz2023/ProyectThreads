@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import co.edu.uptc.interfaces.Contract;
+import co.edu.uptc.utils.UtilThread;
 import co.edu.uptc.views.dialogs.DialogPlay;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
 import co.edu.uptc.views.resourcesView.RoundedButton;
@@ -20,6 +21,8 @@ public class MainView extends JFrame implements Contract.View {
     private JPanel panel = new JPanel();
     public DialogPlay dialogPlay;
     public int numberOfShips;
+    public int time;
+    public int velocity;
 
     public MainView() {
         initFrame();
@@ -35,7 +38,6 @@ public class MainView extends JFrame implements Contract.View {
     }
 
     public void initFrame() {
-
         this.setResizable(false);
         this.setSize(400, 400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,12 +73,32 @@ public class MainView extends JFrame implements Contract.View {
         RoundedButton buttonOptions = new RoundedButton("Opciones");
         buttonOptions.setPreferredSize(new java.awt.Dimension(150, 50));
         buttonOptions.addActionListener(e -> {
-            String input = JOptionPane.showInputDialog(null, 
-                        "Ingrese el número de naves:", "Opciones", 
-                                    JOptionPane.QUESTION_MESSAGE);
-            numberOfShips = Integer.parseInt(input);
+            createInputNumberShips();
+            createInputAparitionTime();
+            createInputVelocity();
         });
         panel.add(buttonOptions);
+    }
+
+    private void createInputNumberShips() {
+        String input = JOptionPane.showInputDialog(null, 
+                        "Ingrese el número de naves:", "Opciones", 
+                                    JOptionPane.QUESTION_MESSAGE);
+        numberOfShips = Integer.parseInt(input);
+    }
+
+    private void createInputAparitionTime() {
+        String input = JOptionPane.showInputDialog(null, 
+                        "Ingrese el tiempo de aparición de naves:", "Opciones", 
+                                    JOptionPane.QUESTION_MESSAGE);
+        time = Integer.parseInt(input);
+    }
+
+    private void createInputVelocity() {
+        String input = JOptionPane.showInputDialog(null, 
+                        "Ingrese la velocidad de las naves:", "Opciones", 
+                                    JOptionPane.QUESTION_MESSAGE);
+        velocity = (Integer.parseInt(input));
     }
 
     private void createButtonExit() {
@@ -127,5 +149,10 @@ public class MainView extends JFrame implements Contract.View {
     @Override
     public int numberOfShips() {
         return numberOfShips;
+    }
+
+    @Override
+    public int setVelocity() {
+        return velocity;
     }
 }

@@ -15,7 +15,8 @@ public class ManagerModel implements Contract.Model {
     private Random random;
     Dimension screenSize;
     private static final double SPEED = 5.0;
-    private int SLEEP_TIME_MS = 50;
+    private int SLEEP_TIME_MS = 1000;
+    public int numberOfColisions = 0;
 
     public ManagerModel() {
     }
@@ -27,12 +28,14 @@ public class ManagerModel implements Contract.Model {
 
     @Override
     public List<Ship> createShips() {
+        SLEEP_TIME_MS = presenter.getVelocity();
         int numberOfShips = presenter.getNumberOfShips();
         ships = new ArrayList<>();
+        //UtilThread.sleep(1000);
         for (int i = 0; i < numberOfShips; i++) {
             ships.add(randomApperance());
         }
-        System.out.println("tamaño inicial" + ships.size());
+        //System.out.println("tamaño inicial" + ships.size());
         moveShipsInRandomAngle();
         return ships;
     }
@@ -62,7 +65,6 @@ public class ManagerModel implements Contract.Model {
             Point newPoint = randomAngle(ship.getPoint());
             moveInDirection(ship, newPoint);
         }
-        System.out.println("Current size: " + ships.size() + "------");
     }
 
     private void moveInDirection(Ship ship, Point destination) {
@@ -101,10 +103,6 @@ public class ManagerModel implements Contract.Model {
     private double calculateDistance(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
-
-    
-    
-    
 
     private Boolean comprovateColisionBounds(Point point) {
         int minX = 0;
