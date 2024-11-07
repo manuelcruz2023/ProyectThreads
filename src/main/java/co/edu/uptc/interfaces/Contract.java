@@ -2,10 +2,7 @@ package co.edu.uptc.interfaces;
 
 import java.awt.Dimension;
 import java.util.List;
-
 import co.edu.uptc.models.Ship;
-
-import java.awt.Point;
 
 public interface Contract {
 
@@ -14,8 +11,10 @@ public interface Contract {
         public void begin();
         public int numberOfShips();
         public int setVelocity();
+        public int setAparitionTime();
         public void updatePosition();
         public Dimension screenSize();
+        public void updateColisionCount();
     }
 
     public interface Presenter {
@@ -23,9 +22,11 @@ public interface Contract {
         public void setModel(Contract.Model model);
         public int getNumberOfShips();
         public int getVelocity();
+        public int getAparitionTime();
         public void changePosition();
         public Dimension getScreenSize();
         public List<Ship> createShips();
+        public void updateColisionCount();
     }
 
     public interface Model {

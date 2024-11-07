@@ -50,7 +50,7 @@ public class InformationPlay extends BackgroundPanel {
     }
 
     private void addLabelAparitionTime() {
-        JLabel label = new JLabel("<html><div style='text-align: center;'>Tiempo de aparición de OVNIS:" + mainView.time + " ms</div></html>");
+        JLabel label = new JLabel("<html><div style='text-align: center;'>Tiempo de aparición de OVNIS:" + mainView.aparitionTime + " ms</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);
@@ -77,7 +77,7 @@ public class InformationPlay extends BackgroundPanel {
     }
 
     private void addLabelCrashedShips() {
-        JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: </div></html>");
+        JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: " +  10 +"</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);

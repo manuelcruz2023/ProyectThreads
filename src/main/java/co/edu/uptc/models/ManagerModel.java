@@ -15,11 +15,9 @@ public class ManagerModel implements Contract.Model {
     private Random random;
     Dimension screenSize;
     private static final double SPEED = 5.0;
-    private int SLEEP_TIME_MS = 1000;
-    public int numberOfColisions = 0;
-
-    public ManagerModel() {
-    }
+    private int velocity = 0;
+    private int aparitionTime = 0;
+    public int colisions = 0;
 
     @Override
     public void setPresenter(Contract.Presenter presenter) {
@@ -28,15 +26,24 @@ public class ManagerModel implements Contract.Model {
 
     @Override
     public List<Ship> createShips() {
-        SLEEP_TIME_MS = presenter.getVelocity();
+        colisions = 0;
+        velocity = presenter.getVelocity();
+        aparitionTime = presenter.getAparitionTime();
         int numberOfShips = presenter.getNumberOfShips();
         ships = new ArrayList<>();
-        //UtilThread.sleep(1000);
-        for (int i = 0; i < numberOfShips; i++) {
-            ships.add(randomApperance());
-        }
-        //System.out.println("tamaño inicial" + ships.size());
-        moveShipsInRandomAngle();
+        presenter.changePosition();
+        Thread thread = new Thread(() -> {
+            System.out.println(numberOfShips + " ships");
+            System.out.println(aparitionTime + " aparition time");
+            System.out.println(velocity + " velocity");
+            for (int i = 0; i < numberOfShips; i++) {
+                UtilThread.sleep(aparitionTime);
+                Ship ship = randomApperance();
+                ships.add(ship);
+                moveShipsInRandomAngle(ship);
+            }
+        });
+        thread.start();
         return ships;
     }
 
@@ -46,25 +53,23 @@ public class ManagerModel implements Contract.Model {
         random = new Random();
         Point randomPoint = new Point();
         randomPoint = new Point(random.nextInt((int) screenSize.getWidth() - 30),
-                random.nextInt((int) screenSize.getHeight() - 30));
+        random.nextInt((int) screenSize.getHeight() - 30));
         ship.setPoint(randomPoint);
         return ship;
     }
 
     private Point randomAngle(Point origin) {
         random = new Random();
-        int newX = random.nextInt((int) screenSize.getWidth()+100);
-        int newY = random.nextInt((int) screenSize.getHeight()+100);
+        double angle = random.nextDouble() * 2 * Math.PI;
+        int distance = 860;
+        int newX = (int) (origin.x + distance * Math.cos(angle));
+        int newY = (int) (origin.y + distance * Math.sin(angle));
         return new Point(newX, newY);
     }
-    
-    
 
-    private void moveShipsInRandomAngle() {
-        for (Ship ship : ships) {
-            Point newPoint = randomAngle(ship.getPoint());
-            moveInDirection(ship, newPoint);
-        }
+    private void moveShipsInRandomAngle(Ship ship) {
+        Point newPoint = randomAngle(ship.getPoint());
+        moveInDirection(ship, newPoint);
     }
 
     private void moveInDirection(Ship ship, Point destination) {
@@ -82,22 +87,23 @@ public class ManagerModel implements Contract.Model {
                 }
                 if (comprovateColisionBounds(ship.getPoint()) == true) {
                     ships.remove(ship);
+                    presenter.changePosition();
                     break;
                 }
                 comprovateColisionShips();
                 presenter.changePosition();
-                UtilThread.sleep(SLEEP_TIME_MS);
+                UtilThread.sleep(velocity);
             }
         }));
         presenter.changePosition();
         ship.getThread().start();
     }
-    
+
     private double[] calculateNormalizedDirection(Point start, Point end) {
         double dx = end.x - start.x;
         double dy = end.y - start.y;
         double distance = Math.sqrt(dx * dx + dy * dy);
-        return distance > 0 ? new double[]{dx / distance, dy / distance} : new double[]{0, 0};
+        return distance > 0 ? new double[] { dx / distance, dy / distance } : new double[] { 0, 0 };
     }
 
     private double calculateDistance(double x1, double y1, double x2, double y2) {
@@ -107,8 +113,8 @@ public class ManagerModel implements Contract.Model {
     private Boolean comprovateColisionBounds(Point point) {
         int minX = 0;
         int minY = 0;
-        int maxX = (int) screenSize.getWidth()-33;
-        int maxY = (int) screenSize.getHeight()-33;
+        int maxX = (int) screenSize.getWidth() - 33;
+        int maxY = (int) screenSize.getHeight() - 33;
         boolean colision = point.x <= minX || point.x >= maxX || point.y <= minY || point.y >= maxY;
         return colision;
     }

@@ -2,7 +2,6 @@ package co.edu.uptc.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -10,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import co.edu.uptc.interfaces.Contract;
-import co.edu.uptc.utils.UtilThread;
 import co.edu.uptc.views.dialogs.DialogPlay;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
 import co.edu.uptc.views.resourcesView.RoundedButton;
@@ -21,8 +19,8 @@ public class MainView extends JFrame implements Contract.View {
     private JPanel panel = new JPanel();
     public DialogPlay dialogPlay;
     public int numberOfShips;
-    public int time;
     public int velocity;
+    public int aparitionTime;
 
     public MainView() {
         initFrame();
@@ -91,7 +89,7 @@ public class MainView extends JFrame implements Contract.View {
         String input = JOptionPane.showInputDialog(null, 
                         "Ingrese el tiempo de aparición de naves:", "Opciones", 
                                     JOptionPane.QUESTION_MESSAGE);
-        time = Integer.parseInt(input);
+        aparitionTime = Integer.parseInt(input);
     }
 
     private void createInputVelocity() {
@@ -154,5 +152,15 @@ public class MainView extends JFrame implements Contract.View {
     @Override
     public int setVelocity() {
         return velocity;
+    }
+
+    @Override
+    public void updateColisionCount() {
+        
+    }
+
+    @Override
+    public int setAparitionTime() {
+        return aparitionTime;
     }
 }

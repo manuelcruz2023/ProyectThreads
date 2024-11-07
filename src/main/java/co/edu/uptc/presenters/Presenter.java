@@ -1,7 +1,6 @@
 package co.edu.uptc.presenters;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.List;
 
 import co.edu.uptc.interfaces.Contract;
@@ -47,6 +46,16 @@ public class Presenter implements Contract.Presenter {
     @Override
     public int getVelocity() {
         return view.setVelocity();
+    }
+
+    @Override
+    public void updateColisionCount() {
+        view.updateColisionCount();
+    }
+
+    @Override
+    public int getAparitionTime() {
+        return view.setAparitionTime();
     }
     
 }

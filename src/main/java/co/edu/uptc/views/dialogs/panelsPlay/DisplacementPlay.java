@@ -1,7 +1,6 @@
 package co.edu.uptc.views.dialogs.panelsPlay;
 
 import co.edu.uptc.models.Ship;
-import co.edu.uptc.utils.UtilThread;
 import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
 

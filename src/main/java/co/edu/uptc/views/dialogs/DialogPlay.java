@@ -1,8 +1,6 @@
 package co.edu.uptc.views.dialogs;
 
 import javax.swing.JDialog;
-
-import co.edu.uptc.utils.UtilThread;
 import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.dialogs.panelsPlay.DisplacementPlay;
 import co.edu.uptc.views.dialogs.panelsPlay.InformationPlay;
@@ -28,7 +26,6 @@ public class DialogPlay extends JDialog {
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
-        //this.setUndecorated(true);
     }
 
     public void begin() {
