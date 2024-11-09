@@ -77,12 +77,17 @@ public class InformationPlay extends BackgroundPanel {
     }
 
     private void addLabelCrashedShips() {
-        JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: " +  10 +"</div></html>");
+        JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: " +
+          mainView.getColitions() + "</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);
         label.setBorder(new EmptyBorder(0, 30, 0, 30));
         this.add(label);
+    }
+
+    private void addVelocityConfig() {
+        
     }
 
     private void addLabels() {

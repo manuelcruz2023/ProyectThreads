@@ -47,15 +47,14 @@ public class Presenter implements Contract.Presenter {
     public int getVelocity() {
         return view.setVelocity();
     }
-
-    @Override
-    public void updateColisionCount() {
-        view.updateColisionCount();
-    }
-
+    
     @Override
     public int getAparitionTime() {
         return view.setAparitionTime();
     }
-    
+
+    @Override
+    public int setColitions() {
+        return model.getColitions();
+    }
 }

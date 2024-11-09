@@ -6,17 +6,21 @@ import co.edu.uptc.views.resourcesView.BackgroundPanel;
 
 import java.awt.*;
 import java.util.List;
-
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class DisplacementPlay extends BackgroundPanel {
     private MainView mainView;
     private List<Ship> ships;
     private JPanel destinationPanel;
+    private Image shipImage;
+    private Image scaledShipImage;
 
-    public DisplacementPlay(MainView mainView, String backgroundImagePath) {
+    public DisplacementPlay(MainView mainView, String backgroundImagePath, String imagePath) {
         super(backgroundImagePath);
         this.mainView = mainView;
+        shipImage = new ImageIcon(imagePath).getImage();
+        scaledShipImage = shipImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         initFrame();
         begin();
         addDestination();
@@ -38,8 +42,7 @@ public class DisplacementPlay extends BackgroundPanel {
         }
         if (ships != null) {
             for (Ship ship : ships) {
-                g.setColor(Color.WHITE);
-                g.drawOval(ship.getPoint().x, ship.getPoint().y, 30, 30);
+                g.drawImage(scaledShipImage, ship.getPoint().x, ship.getPoint().y, this);
             }
         }
     }

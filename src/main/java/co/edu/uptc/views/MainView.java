@@ -2,12 +2,19 @@ package co.edu.uptc.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import co.edu.uptc.interfaces.Contract;
 import co.edu.uptc.views.dialogs.DialogPlay;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
@@ -21,6 +28,11 @@ public class MainView extends JFrame implements Contract.View {
     public int numberOfShips;
     public int velocity;
     public int aparitionTime;
+    private JTextField numberOfShipsField;
+    private JTextField aparitionTimeField;
+    private JTextField velocityField;
+    private JComboBox<String> UFOS;
+    public String ufoPath;
 
     public MainView() {
         initFrame();
@@ -71,32 +83,87 @@ public class MainView extends JFrame implements Contract.View {
         RoundedButton buttonOptions = new RoundedButton("Opciones");
         buttonOptions.setPreferredSize(new java.awt.Dimension(150, 50));
         buttonOptions.addActionListener(e -> {
-            createInputNumberShips();
-            createInputAparitionTime();
-            createInputVelocity();
+            createInputPanel();
         });
         panel.add(buttonOptions);
     }
 
-    private void createInputNumberShips() {
-        String input = JOptionPane.showInputDialog(null, 
-                        "Ingrese el número de naves:", "Opciones", 
-                                    JOptionPane.QUESTION_MESSAGE);
-        numberOfShips = Integer.parseInt(input);
+    private void createInputPanel() {
+        numberOfShipsField = createTextField(5);
+        aparitionTimeField = createTextField(5);
+        velocityField = createTextField(5);
+        UFOS = createComboBox();
+
+        JPanel myPanel = createPanel(numberOfShipsField, aparitionTimeField, velocityField, UFOS);
+        showConfirmDialog(myPanel, numberOfShipsField, aparitionTimeField);
     }
 
-    private void createInputAparitionTime() {
-        String input = JOptionPane.showInputDialog(null, 
-                        "Ingrese el tiempo de aparición de naves:", "Opciones", 
-                                    JOptionPane.QUESTION_MESSAGE);
-        aparitionTime = Integer.parseInt(input);
+    private JTextField createTextField(int columns) {
+        return new JTextField(columns);
     }
 
-    private void createInputVelocity() {
-        String input = JOptionPane.showInputDialog(null, 
-                        "Ingrese la velocidad de las naves:", "Opciones", 
-                                    JOptionPane.QUESTION_MESSAGE);
-        velocity = (Integer.parseInt(input));
+    private JComboBox<String> createComboBox() {
+        UFOS = new JComboBox<>();
+        UFOS.addItem("");
+        UFOS.addItem("OVNI 1");
+        UFOS.addItem("OVNI 2");
+        UFOS.addItem("OVNI 3");
+        UFOS.setSelectedIndex(0);
+        UFOS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedUFO();
+            }
+        });
+        return UFOS;
+    }
+
+    private void selectedUFO() {
+        switch (UFOS.getSelectedIndex()) {
+            case 1:
+                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO1.png";
+                break;
+            case 2:
+                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO2.png";
+                break;
+            case 3:
+                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO3.png";
+                break;
+        }
+    }
+
+    private JPanel createPanel(JTextField numberOfShipsField, JTextField aparitionTimeField, JTextField velocityField,
+        JComboBox<String> UFOS) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 2));
+        panel.add(new JLabel("Número de naves:"));
+        panel.add(numberOfShipsField);
+        panel.add(new JLabel("Tiempo de aparición de naves:"));
+        panel.add(aparitionTimeField);
+        panel.add(new JLabel("Velocidad de las naves:"));
+        panel.add(velocityField);
+        panel.add(new JLabel("Tipo de naves:"));
+        panel.add(UFOS);
+        return panel;
+    }
+
+    private void showConfirmDialog(JPanel panel, JTextField numberOfShipsField, JTextField aparitionTimeField) {
+        int result = JOptionPane.showConfirmDialog(null, panel, "Opciones", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            if (numberOfShipsField.getText().isEmpty() || aparitionTimeField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    numberOfShips = Integer.parseInt(numberOfShipsField.getText());
+                    aparitionTime = Integer.parseInt(aparitionTimeField.getText());
+                    velocity = Integer.parseInt(velocityField.getText());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese valores numéricos válidos.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }
 
     private void createButtonExit() {
@@ -137,7 +204,7 @@ public class MainView extends JFrame implements Contract.View {
 
     @Override
     public Dimension screenSize() {
-        Dimension size= new Dimension();
+        Dimension size = new Dimension();
         if (dialogPlay != null && dialogPlay.displacementPlay != null) {
             size = dialogPlay.displacementPlay.getSize();
         }
@@ -155,12 +222,11 @@ public class MainView extends JFrame implements Contract.View {
     }
 
     @Override
-    public void updateColisionCount() {
-        
-    }
-
-    @Override
     public int setAparitionTime() {
         return aparitionTime;
+    }
+
+    public int getColitions() {
+        return presenter.setColitions();
     }
 }

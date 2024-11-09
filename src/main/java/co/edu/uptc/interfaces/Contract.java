@@ -14,7 +14,6 @@ public interface Contract {
         public int setAparitionTime();
         public void updatePosition();
         public Dimension screenSize();
-        public void updateColisionCount();
     }
 
     public interface Presenter {
@@ -23,14 +22,15 @@ public interface Contract {
         public int getNumberOfShips();
         public int getVelocity();
         public int getAparitionTime();
+        public int setColitions();
         public void changePosition();
         public Dimension getScreenSize();
         public List<Ship> createShips();
-        public void updateColisionCount();
     }
 
     public interface Model {
         public void setPresenter(Contract.Presenter presenter);
         public List<Ship> createShips();
+        public int getColitions();
     }
 }

@@ -33,14 +33,12 @@ public class ManagerModel implements Contract.Model {
         ships = new ArrayList<>();
         presenter.changePosition();
         Thread thread = new Thread(() -> {
-            System.out.println(numberOfShips + " ships");
-            System.out.println(aparitionTime + " aparition time");
-            System.out.println(velocity + " velocity");
             for (int i = 0; i < numberOfShips; i++) {
                 UtilThread.sleep(aparitionTime);
                 Ship ship = randomApperance();
                 ships.add(ship);
                 moveShipsInRandomAngle(ship);
+                //clickShip(ship);
             }
         });
         thread.start();
@@ -88,6 +86,7 @@ public class ManagerModel implements Contract.Model {
                 if (comprovateColisionBounds(ship.getPoint()) == true) {
                     ships.remove(ship);
                     presenter.changePosition();
+                    colisions++;
                     break;
                 }
                 comprovateColisionShips();
@@ -127,6 +126,7 @@ public class ManagerModel implements Contract.Model {
                 Ship ship2 = ships.get(j);
                 if (ship != ship2 && !shipsToRemove.contains(ship) && !shipsToRemove.contains(ship2)) {
                     if (ship.getPoint().distance(ship2.getPoint()) < 30) {
+                        colisions++;
                         shipsToRemove.add(ship);
                         shipsToRemove.add(ship2);
                     }
@@ -136,4 +136,13 @@ public class ManagerModel implements Contract.Model {
         ships.removeAll(shipsToRemove);
         return !shipsToRemove.isEmpty();
     }
+
+
+    @Override
+    public int getColitions() {
+        int numCollitions = colisions;
+        presenter.changePosition();
+        return numCollitions;
+    }
+
 }
