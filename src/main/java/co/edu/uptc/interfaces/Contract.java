@@ -26,11 +26,15 @@ public interface Contract {
         public void changePosition();
         public Dimension getScreenSize();
         public List<Ship> createShips();
+        public void changeVelocity(Ship ship, int velocity);
+        public void updateShipPosition(Ship ship, int x, int y);
     }
 
     public interface Model {
         public void setPresenter(Contract.Presenter presenter);
         public List<Ship> createShips();
         public int getColitions();
+        public void changeVelocity(Ship ship, int velocity);
+        public void updateShipPosition(Ship ship, int x, int y);
     }
 }

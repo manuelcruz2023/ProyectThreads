@@ -57,4 +57,14 @@ public class Presenter implements Contract.Presenter {
     public int setColitions() {
         return model.getColitions();
     }
+
+    @Override
+    public void changeVelocity(Ship ship, int velocity) {
+        model.changeVelocity(ship, velocity);
+    }
+
+    @Override
+    public void updateShipPosition(Ship ship, int x, int y) {
+        model.updateShipPosition(ship, x, y);
+    }
 }

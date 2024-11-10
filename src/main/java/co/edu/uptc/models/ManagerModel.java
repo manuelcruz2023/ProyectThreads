@@ -15,9 +15,9 @@ public class ManagerModel implements Contract.Model {
     private Random random;
     Dimension screenSize;
     private static final double SPEED = 5.0;
-    private int velocity = 0;
     private int aparitionTime = 0;
     public int colisions = 0;
+    private Boolean selected = false;
 
     @Override
     public void setPresenter(Contract.Presenter presenter) {
@@ -27,7 +27,6 @@ public class ManagerModel implements Contract.Model {
     @Override
     public List<Ship> createShips() {
         colisions = 0;
-        velocity = presenter.getVelocity();
         aparitionTime = presenter.getAparitionTime();
         int numberOfShips = presenter.getNumberOfShips();
         ships = new ArrayList<>();
@@ -38,7 +37,6 @@ public class ManagerModel implements Contract.Model {
                 Ship ship = randomApperance();
                 ships.add(ship);
                 moveShipsInRandomAngle(ship);
-                //clickShip(ship);
             }
         });
         thread.start();
@@ -53,6 +51,7 @@ public class ManagerModel implements Contract.Model {
         randomPoint = new Point(random.nextInt((int) screenSize.getWidth() - 30),
         random.nextInt((int) screenSize.getHeight() - 30));
         ship.setPoint(randomPoint);
+        ship.setVelocity(presenter.getVelocity());
         return ship;
     }
 
@@ -91,7 +90,10 @@ public class ManagerModel implements Contract.Model {
                 }
                 comprovateColisionShips();
                 presenter.changePosition();
-                UtilThread.sleep(velocity);
+                UtilThread.sleep(ship.getVelocity());
+                if (selected==true) {
+                    break;
+                }
             }
         }));
         presenter.changePosition();
@@ -145,4 +147,15 @@ public class ManagerModel implements Contract.Model {
         return numCollitions;
     }
 
+    @Override
+    public void changeVelocity(Ship ship, int velocity) {
+        ship.setVelocity(velocity);
+    }
+
+    @Override
+    public void updateShipPosition(Ship ship, int x, int y) {
+        selected = true;
+        ship.setPoint(new Point(x, y));
+        presenter.changePosition();
+    }
 }
