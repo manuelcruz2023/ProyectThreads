@@ -228,6 +228,6 @@ public class MainView extends JFrame implements Contract.View {
     }
 
     public int getColitions() {
-        return presenter.setColitions();
+        return presenter.getColitions();
     }
 }

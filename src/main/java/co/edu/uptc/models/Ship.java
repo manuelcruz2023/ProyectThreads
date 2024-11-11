@@ -6,6 +6,7 @@ public class Ship {
     private Point point;
     private Thread thread;
     private int velocity;
+    private Point destinationPoint;
 
     public Point getPoint() {
         return point;
@@ -24,5 +25,11 @@ public class Ship {
     }
     public void setVelocity(int velocity) {
         this.velocity = velocity;
+    }
+    public Point getDestinationPoint() {
+        return destinationPoint;
+    }
+    public void setDestinationPoint(Point destinationPoint) {
+        this.destinationPoint = destinationPoint;
     }
 }
