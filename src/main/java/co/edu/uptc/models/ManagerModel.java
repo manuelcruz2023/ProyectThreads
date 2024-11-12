@@ -88,8 +88,7 @@ public class ManagerModel implements Contract.Model {
                 }
                 if (comprovateColisionBounds(ship.getPoint()) == true) {
                     ships.remove(ship);
-                    colisions++;
-                    setColitions();
+                    presenter.updateColitions();
                     presenter.changePosition();
                 }
 
@@ -135,10 +134,9 @@ public class ManagerModel implements Contract.Model {
                 Ship ship2 = ships.get(j);
                 if (ship != ship2 && !shipsToRemove.contains(ship) && !shipsToRemove.contains(ship2)) {
                     if (ship.getPoint().distance(ship2.getPoint()) < 30) {
-                        colisions++;
+                        presenter.updateColitions();
                         shipsToRemove.add(ship);
                         shipsToRemove.add(ship2);
-                        setColitions();
                         presenter.changePosition();
                     }
                 }
@@ -151,7 +149,6 @@ public class ManagerModel implements Contract.Model {
 
     @Override
     public int setColitions() {
-        //System.out.println("Colisiones: " + colisions);
         return colisions;
     }
 
@@ -166,7 +163,7 @@ public class ManagerModel implements Contract.Model {
         ship.setPoint(new Point(x, y));
         if (comprovateColisionBounds(ship.getPoint()) == true) {
             ships.remove(ship);
-            colisions++;
+            presenter.updateColitions();
             setColitions();
             presenter.changePosition();
         }

@@ -12,6 +12,7 @@ public class DialogPlay extends JDialog {
 
     public DisplacementPlay displacementPlay;
     public MainView mainView;
+    public InformationPlay informationPlay;
     
     public DialogPlay(MainView mainView) {
         this.mainView = mainView;
@@ -39,7 +40,7 @@ public class DialogPlay extends JDialog {
     }
 
     private void createInformationPlay() {
-        InformationPlay informationPlay = new InformationPlay(mainView);
+        informationPlay = new InformationPlay(mainView);
         this.add(informationPlay, BorderLayout.WEST);
     }
 

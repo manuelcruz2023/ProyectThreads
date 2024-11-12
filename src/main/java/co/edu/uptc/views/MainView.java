@@ -230,4 +230,10 @@ public class MainView extends JFrame implements Contract.View {
     public int getColitions() {
         return presenter.getColitions();
     }
+
+    @Override
+    public void updateColitions() {
+        dialogPlay.informationPlay.colitions++;
+        dialogPlay.informationPlay.repaint();
+    }
 }

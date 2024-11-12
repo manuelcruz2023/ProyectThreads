@@ -15,6 +15,7 @@ import co.edu.uptc.views.resourcesView.BackgroundPanel;
 public class InformationPlay extends BackgroundPanel {
 
     private MainView mainView;
+    public int colitions = 0;
 
     public InformationPlay(MainView mainView) {
         super("src\\main\\java\\co\\edu\\uptc\\images\\backgroundInformation.png");
@@ -80,7 +81,7 @@ public class InformationPlay extends BackgroundPanel {
 
     private void addLabelCrashedShips() {
         JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: " +
-                mainView.getColitions() + "</div></html>");
+                colitions + "</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);

@@ -1,7 +1,6 @@
 package co.edu.uptc.interfaces;
 
 import java.awt.Dimension;
-import java.awt.Panel;
 import java.awt.Point;
 import java.util.List;
 import co.edu.uptc.models.Ship;
@@ -16,6 +15,7 @@ public interface Contract {
         public int setAparitionTime();
         public void updatePosition();
         public Dimension screenSize();
+        public void updateColitions();
     }
 
     public interface Presenter {
@@ -33,6 +33,7 @@ public interface Contract {
         public void changeVelocity(Ship ship, int velocity);
         public void updateShipPosition(Ship ship, int x, int y);
         public void continueMovement(Ship ship, Point point);
+        public void updateColitions();
     }
 
     public interface Model {
