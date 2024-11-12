@@ -9,6 +9,7 @@ public class Ship {
     private Point destinationPoint;
     private Boolean selected = false;
     private Boolean selected2 = false;
+    private Trajectory lasTrajectory;
 
     public Point getPoint() {
         return point;
@@ -45,5 +46,11 @@ public class Ship {
     }
     public void setSelected2(Boolean selected2) {
         this.selected2 = selected2;
+    }
+    public Trajectory getLasTrajectory() {
+        return lasTrajectory;
+    }
+    public void setLasTrajectory(Trajectory lasTrajectory) {
+        this.lasTrajectory = lasTrajectory;
     }
 }

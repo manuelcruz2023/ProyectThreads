@@ -1,6 +1,7 @@
 package co.edu.uptc.views.dialogs.panelsPlay;
 
 import co.edu.uptc.models.Ship;
+import co.edu.uptc.models.Trajectory;
 import co.edu.uptc.utils.UtilThread;
 import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
@@ -88,7 +89,7 @@ public class DisplacementPlay extends BackgroundPanel {
         if (ships != null) {
             for (Ship ship : ships) {
                 Point shipPoint = ship.getPoint();
-                Rectangle shipBounds = new Rectangle(shipPoint.x, shipPoint.y, 100, 100);
+                Rectangle shipBounds = new Rectangle(shipPoint.x, shipPoint.y, 200, 200);
                 if (shipBounds.contains(clickPoint) && ship != null) {
                     comprovationClick(ship, e);
                 }
@@ -109,8 +110,9 @@ public class DisplacementPlay extends BackgroundPanel {
         component.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                
+
                 if (!ship.getSelected2()) {
+                    ship.setLasTrajectory(new Trajectory(e.getPoint(), ship.getPoint()));
                     drawTrajectory(getGraphics(), e.getPoint(), ship);
                     Point point = ship.getPoint();
                     mainView.presenter.updateShipPosition(ship, e.getX(), e.getY());
@@ -126,8 +128,11 @@ public class DisplacementPlay extends BackgroundPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    component.removeMouseMotionListener(this);
-                    ship.setSelected2(true);
+                    if (!ship.getSelected2()) {
+                        component.removeMouseMotionListener(this);
+                        ship.setSelected2(true);
+                        mainView.presenter.continueMovement(ship, ship.getLasTrajectory());
+                    }
                 }
             }
         });

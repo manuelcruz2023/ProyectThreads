@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.List;
 import co.edu.uptc.models.Ship;
+import co.edu.uptc.models.Trajectory;
 
 public interface Contract {
 
@@ -32,7 +33,7 @@ public interface Contract {
         public List<Ship> createShips();
         public void changeVelocity(Ship ship, int velocity);
         public void updateShipPosition(Ship ship, int x, int y);
-        public void continueMovement(Ship ship, Point point);
+        public void continueMovement(Ship ship, Trajectory trajectory);
 
         public void updateTotalShipsOnScreen();
         public void updateTotalShipsCrashed();
@@ -43,7 +44,7 @@ public interface Contract {
         public List<Ship> createShips();
         public void changeVelocity(Ship ship, int velocity);
         public void updateShipPosition(Ship ship, int x, int y);
-        public void continueMovement(Ship ship, Point point);
+        public void continueMovement(Ship ship, Trajectory trajectory);
 
         int getTotalShipsOnScreen();
         int getTotalShipsCrashed();

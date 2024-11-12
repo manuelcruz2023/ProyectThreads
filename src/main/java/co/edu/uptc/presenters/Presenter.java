@@ -1,13 +1,12 @@
 package co.edu.uptc.presenters;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.List;
-
 import co.edu.uptc.interfaces.Contract;
 import co.edu.uptc.interfaces.Contract.Model;
 import co.edu.uptc.interfaces.Contract.View;
 import co.edu.uptc.models.Ship;
+import co.edu.uptc.models.Trajectory;
 
 public class Presenter implements Contract.Presenter {
 
@@ -65,8 +64,8 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public void continueMovement(Ship ship, Point point) {
-        model.continueMovement(ship, point);
+    public void continueMovement(Ship ship, Trajectory trajectory) {
+        model.continueMovement(ship, trajectory);
     }
 
     @Override

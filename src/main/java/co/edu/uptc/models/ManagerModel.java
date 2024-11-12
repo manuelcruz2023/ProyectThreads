@@ -100,7 +100,7 @@ public class ManagerModel implements Contract.Model {
                     break;
                 }
 
-                if (ship.getSelected()) {
+                if (ship.getSelected() || ship.getSelected2()) {
                     break;
                 }
                 comprovateColisionShips();
@@ -144,9 +144,8 @@ public class ManagerModel implements Contract.Model {
                     if (ship.getPoint().distance(ship2.getPoint()) < 30) {
                         shipsToRemove.add(ship);
                         shipsToRemove.add(ship2);
-                        synchronized (this) {
 
-                        }
+                        ship.setSelected(true);
                     }
                 }
             }
@@ -163,32 +162,30 @@ public class ManagerModel implements Contract.Model {
 
     @Override
     public synchronized void updateShipPosition(Ship ship, int x, int y) {
-        ship.setSelected(true);
-        ship.setPoint(new Point(x, y));
-        if (comprovateColisionBounds(ship.getPoint())) {
-            ships.remove(ship);
-            ship.setSelected2(true);
+        if (!ship.getSelected2()) {
+            ship.setSelected(true);
+            ship.setPoint(new Point(x, y));
+            if (comprovateColisionBounds(ship.getPoint())) {
+                ships.remove(ship);
+                ship.setSelected2(true);
+                presenter.changePosition();
+            }
+            comprovateColisionShips();
+            if (comprovationArrive(ship)) {
+                ships.remove(ship);
+            }
+            ship.setSelected(true);
             presenter.changePosition();
         }
-        comprovateColisionShips();
-        if (comprovationArrive(ship)) {
-            ships.remove(ship);
-        }
-        presenter.changePosition();
-    }
-
-    @Override
-    public synchronized void continueMovement(Ship ship, Point point) {
-        moveInDirection(ship);
-        ship.setDestinationPoint(point);
     }
 
     private synchronized Boolean comprovationArrive(Ship ship) {
         Boolean arrive = false;
         if (ship.getPoint().getX() >= 0 && ship.getPoint().getY() >= 0
-                && ship.getPoint().getX() <= 100 && ship.getPoint().getY() <= 100) {
+                && ship.getPoint().getX() <= 100 && ship.getPoint().getY() <= 100 && ship.getSelected2() == false) {
             ships.remove(ship);
             arrive = true;
+            ship.setSelected2(true);
             synchronized (this) {
                 totalShipsOnScreen--;
                 presenter.updateTotalShipsOnScreen();
@@ -206,5 +203,30 @@ public class ManagerModel implements Contract.Model {
     @Override
     public synchronized int getTotalShipsCrashed() {
         return totalShipsCrashed;
+    }
+
+    @Override
+    public void continueMovement(Ship ship, Trajectory lastTrajectory) {
+        ship.setThread(new Thread(() -> {
+            double[] direction = calculateNormalizedDirection(ship.getPoint(), ship.getDestinationPoint());
+            double currentX = ship.getPoint().x;
+            double currentY = ship.getPoint().y;
+            while (!Thread.currentThread().isInterrupted()) {
+                currentX += direction[0] * SPEED;
+                currentY += direction[1] * SPEED;
+                ship.setPoint(new Point((int) Math.round(currentX), (int) Math.round(currentY)));
+                if (calculateDistance(currentX, currentY, ship.getDestinationPoint().x,
+                        ship.getDestinationPoint().y) < SPEED) {
+                    ship.setPoint(ship.getDestinationPoint());
+                    break;
+                }
+                comprovateColisionShips();
+                comprovationArrive(ship);
+                presenter.changePosition();
+                UtilThread.sleep(ship.getVelocity());
+            }
+        }));
+        presenter.changePosition();
+        ship.getThread().start();
     }
 }
