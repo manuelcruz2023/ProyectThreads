@@ -7,6 +7,8 @@ import java.awt.Graphics;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import co.edu.uptc.views.MainView;
@@ -86,10 +88,24 @@ public class InformationPlay extends BackgroundPanel {
         this.add(label);
     }
 
-    private void addVelocityConfig() {
+
+    private void getListShips() {
         
     }
 
+    private void addTableWithScroll() {
+        String[] columnNames = {"ID", "Cantidad de OVNIS"};
+        Object[][] data = {
+            {"1", }
+        };
+
+        JTable table = new JTable(data, columnNames);
+        table.setFillsViewportHeight(true);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(300, 100));
+        this.add(scrollPane);
+    }
     private void addLabels() {
         addLabelNumShips();
         addLabelAparitionTime();
