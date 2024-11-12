@@ -110,7 +110,7 @@ public class DisplacementPlay extends BackgroundPanel {
                         drawTrajectory(getGraphics(), e.getPoint(), ship);
                         Point point = ship.getPoint();
                         mainView.presenter.updateShipPosition(ship, e.getX(), e.getY());
-                        UtilThread.sleep(50);
+                        UtilThread.sleep(10);
                         secondClick(component, ship, point);
                     }
                 }
@@ -130,12 +130,6 @@ public class DisplacementPlay extends BackgroundPanel {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     component.removeMouseMotionListener(this);
                     selected = true;
-                    int x = e.getX() + point.x;
-                    int y = e.getY() + point.y;
-                    int newX = x * 10;
-                    int newY = y * 10;
-                    Point point = new Point(newX, newY);
-                    mainView.presenter.continueMovement(ship, point);
                 }
             }
         });

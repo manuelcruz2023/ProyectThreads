@@ -73,4 +73,10 @@ public class Presenter implements Contract.Presenter {
     public void continueMovement(Ship ship, Point point) {
         model.continueMovement(ship, point);
     }
+
+    @Override
+    public void updateColitions() {
+        view.updateColitions();
+        view.updatePosition();
+    }
 }
