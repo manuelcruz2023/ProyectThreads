@@ -1,4 +1,5 @@
-## Proyecto Hilos Manuel Cruz - Simulator UFOS
+## Proyecto Hilos - Simulator UFOS
 
 
-## Version minima de java 
+## Autor 
+ - Manuel Esteban Cruz
