@@ -55,11 +55,6 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public int getColitions() {
-        return model.setColitions();
-    }
-
-    @Override
     public void changeVelocity(Ship ship, int velocity) {
         model.changeVelocity(ship, velocity);
     }
@@ -75,8 +70,14 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public void updateColitions() {
-        view.updateColitions();
-        view.updatePosition();
+    public void updateTotalShipsOnScreen() {
+        int totalShips = model.getTotalShipsOnScreen();
+        view.updateTotalShipsOnScreen(totalShips);
+    }
+
+    @Override
+    public void updateTotalShipsCrashed() {
+        int totalCrashed = model.getTotalShipsCrashed();
+        view.updateTotalShipsCrashed(totalCrashed);
     }
 }

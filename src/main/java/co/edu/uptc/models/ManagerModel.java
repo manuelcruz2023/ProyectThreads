@@ -16,11 +16,9 @@ public class ManagerModel implements Contract.Model {
     Dimension screenSize;
     private static final double SPEED = 5.0;
     private int aparitionTime = 0;
-    public int colisions = 0;
-    public int winners = 0;
-    private Boolean selected = false;
+    private int totalShipsOnScreen = 0;
+    private int totalShipsCrashed = 0;
 
-    @Override
     public void setPresenter(Contract.Presenter presenter) {
         this.presenter = presenter;
     }
@@ -29,14 +27,14 @@ public class ManagerModel implements Contract.Model {
     public List<Ship> createShips() {
         aparitionTime = presenter.getAparitionTime();
         int numberOfShips = presenter.getNumberOfShips();
+        totalShipsOnScreen = numberOfShips;
+        presenter.updateTotalShipsOnScreen();
+        totalShipsCrashed = 0;
         ships = new ArrayList<>();
         presenter.changePosition();
         Thread thread = new Thread(() -> {
             for (int i = 0; i < numberOfShips; i++) {
-                selected = false;
                 UtilThread.sleep(aparitionTime);
-                winners = 0;
-                colisions = 0;
                 Ship ship = randomApperance();
                 ships.add(ship);
                 moveShipsInRandomAngle(ship);
@@ -50,9 +48,8 @@ public class ManagerModel implements Contract.Model {
         Ship ship = new Ship();
         screenSize = presenter.getScreenSize();
         random = new Random();
-        Point randomPoint = new Point();
-        randomPoint = new Point(random.nextInt((int) screenSize.getWidth() - 30),
-        random.nextInt((int) screenSize.getHeight() - 30));
+        Point randomPoint = new Point(random.nextInt((int) screenSize.getWidth() - 30),
+                random.nextInt((int) screenSize.getHeight() - 30));
         ship.setPoint(randomPoint);
         ship.setVelocity(presenter.getVelocity());
         return ship;
@@ -82,17 +79,28 @@ public class ManagerModel implements Contract.Model {
                 currentX += direction[0] * SPEED;
                 currentY += direction[1] * SPEED;
                 ship.setPoint(new Point((int) Math.round(currentX), (int) Math.round(currentY)));
-                if (calculateDistance(currentX, currentY, ship.getDestinationPoint().x, ship.getDestinationPoint().y) < SPEED) {
+                if (calculateDistance(currentX, currentY, ship.getDestinationPoint().x,
+                        ship.getDestinationPoint().y) < SPEED) {
                     ship.setPoint(ship.getDestinationPoint());
                     break;
                 }
-                if (comprovateColisionBounds(ship.getPoint()) == true) {
-                    ships.remove(ship);
-                    presenter.updateColitions();
+                if (comprovateColisionBounds(ship.getPoint())) {
+                    synchronized (this) {
+                        ships.remove(ship);
+                        totalShipsCrashed++;
+                        totalShipsOnScreen--;
+                        presenter.updateTotalShipsOnScreen();
+                        presenter.updateTotalShipsCrashed();
+                    }
                     presenter.changePosition();
+                    break;
                 }
 
-                if (selected==true) {
+                if (comprovationArrive(ship)) {
+                    break;
+                }
+
+                if (ship.getSelected()) {
                     break;
                 }
                 comprovateColisionShips();
@@ -116,7 +124,7 @@ public class ManagerModel implements Contract.Model {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    private Boolean comprovateColisionBounds(Point point) {
+    private synchronized Boolean comprovateColisionBounds(Point point) {
         int minX = 0;
         int minY = 0;
         int maxX = (int) screenSize.getWidth() - 33;
@@ -134,56 +142,69 @@ public class ManagerModel implements Contract.Model {
                 Ship ship2 = ships.get(j);
                 if (ship != ship2 && !shipsToRemove.contains(ship) && !shipsToRemove.contains(ship2)) {
                     if (ship.getPoint().distance(ship2.getPoint()) < 30) {
-                        presenter.updateColitions();
                         shipsToRemove.add(ship);
                         shipsToRemove.add(ship2);
-                        presenter.changePosition();
+                        synchronized (this) {
+
+                        }
                     }
                 }
             }
         }
         ships.removeAll(shipsToRemove);
+        presenter.changePosition();
         return !shipsToRemove.isEmpty();
     }
 
-
     @Override
-    public int setColitions() {
-        return colisions;
-    }
-
-    @Override
-    public void changeVelocity(Ship ship, int velocity) {
+    public synchronized void changeVelocity(Ship ship, int velocity) {
         ship.setVelocity(velocity);
     }
 
     @Override
-    public void updateShipPosition(Ship ship, int x, int y) {
-        selected = true;
+    public synchronized void updateShipPosition(Ship ship, int x, int y) {
+        ship.setSelected(true);
         ship.setPoint(new Point(x, y));
-        if (comprovateColisionBounds(ship.getPoint()) == true) {
+        if (comprovateColisionBounds(ship.getPoint())) {
             ships.remove(ship);
-            presenter.updateColitions();
-            setColitions();
+            ship.setSelected2(true);
             presenter.changePosition();
         }
         comprovateColisionShips();
-        comprovationArrive(ship);
+        if (comprovationArrive(ship)) {
+            ships.remove(ship);
+        }
         presenter.changePosition();
     }
 
     @Override
-    public void continueMovement(Ship ship, Point point) {
+    public synchronized void continueMovement(Ship ship, Point point) {
         moveInDirection(ship);
         ship.setDestinationPoint(point);
     }
 
-    private void comprovationArrive(Ship ship) {
+    private synchronized Boolean comprovationArrive(Ship ship) {
+        Boolean arrive = false;
         if (ship.getPoint().getX() >= 0 && ship.getPoint().getY() >= 0
                 && ship.getPoint().getX() <= 100 && ship.getPoint().getY() <= 100) {
             ships.remove(ship);
+            arrive = true;
+            synchronized (this) {
+                totalShipsOnScreen--;
+                presenter.updateTotalShipsOnScreen();
+            }
             presenter.changePosition();
-            winners++;
         }
+        return arrive;
+    }
+
+    @Override
+    public synchronized int getTotalShipsOnScreen() {
+        return totalShipsOnScreen;
+    }
+
+    @Override
+    public synchronized int getTotalShipsCrashed() {
+        return totalShipsCrashed;
     }
 }

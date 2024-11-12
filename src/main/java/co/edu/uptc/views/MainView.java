@@ -227,13 +227,13 @@ public class MainView extends JFrame implements Contract.View {
         return aparitionTime;
     }
 
-    public int getColitions() {
-        return presenter.getColitions();
+    @Override
+    public void updateTotalShipsOnScreen(int totalShips) {
+        dialogPlay.informationPlay.updateTotalShipsOnScreen(totalShips);
     }
 
     @Override
-    public void updateColitions() {
-        dialogPlay.informationPlay.colitions++;
-        dialogPlay.informationPlay.repaint();
+    public void updateTotalShipsCrashed(int totalCrashed) {
+        dialogPlay.informationPlay.updateTotalShipsCrashed(totalCrashed);
     }
 }

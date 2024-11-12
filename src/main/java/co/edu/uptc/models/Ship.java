@@ -7,6 +7,8 @@ public class Ship {
     private Thread thread;
     private int velocity;
     private Point destinationPoint;
+    private Boolean selected = false;
+    private Boolean selected2 = false;
 
     public Point getPoint() {
         return point;
@@ -31,5 +33,17 @@ public class Ship {
     }
     public void setDestinationPoint(Point destinationPoint) {
         this.destinationPoint = destinationPoint;
+    }
+    public Boolean getSelected() {
+        return selected;
+    }
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+    public Boolean getSelected2() {
+        return selected2;
+    }
+    public void setSelected2(Boolean selected2) {
+        this.selected2 = selected2;
     }
 }

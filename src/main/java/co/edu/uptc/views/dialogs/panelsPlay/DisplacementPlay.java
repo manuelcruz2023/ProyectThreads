@@ -23,7 +23,6 @@ public class DisplacementPlay extends BackgroundPanel {
     public JPanel destinationPanel;
     private Image shipImage;
     private Image scaledShipImage;
-    private Boolean selected = false;
 
     public DisplacementPlay(MainView mainView, String backgroundImagePath, String imagePath) {
         super(backgroundImagePath);
@@ -59,13 +58,12 @@ public class DisplacementPlay extends BackgroundPanel {
         if (ships != null) {
             for (Ship ship : ships) {
                 g.drawImage(scaledShipImage, ship.getPoint().x, ship.getPoint().y, this);
-
             }
         }
     }
 
     public void drawTrajectory(Graphics g, Point mousePosition, Ship ship) {
-        if (ship != null) {
+        if (ship != null && ships.contains(ship)) {
             g.setColor(Color.white);
             g.drawLine((int) ship.getPoint().getX() + 25, (int) ship.getPoint().getY() + 25,
                     mousePosition.x + 25, mousePosition.y + 25);
@@ -102,25 +100,25 @@ public class DisplacementPlay extends BackgroundPanel {
         if (SwingUtilities.isRightMouseButton(e)) {
             addPopupMenu(ship, e);
         } else if (SwingUtilities.isLeftMouseButton(e)) {
-            Component component = e.getComponent();
-            component.addMouseMotionListener(new MouseMotionAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    if (selected == false) {
-                        drawTrajectory(getGraphics(), e.getPoint(), ship);
-                        Point point = ship.getPoint();
-                        mainView.presenter.updateShipPosition(ship, e.getX(), e.getY());
-                        UtilThread.sleep(10);
-                        secondClick(component, ship, point);
-                    }
-                }
-
-                @Override
-                public void mouseDragged(MouseEvent e) {
-                    // mainView.presenter.updateShipPosition(ship, e.getX(), e.getY());
-                }
-            });
+            handleLeftMouseClick(ship, e);
         }
+    }
+
+    private void handleLeftMouseClick(Ship ship, MouseEvent e) {
+        Component component = e.getComponent();
+        component.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                
+                if (!ship.getSelected2()) {
+                    drawTrajectory(getGraphics(), e.getPoint(), ship);
+                    Point point = ship.getPoint();
+                    mainView.presenter.updateShipPosition(ship, e.getX(), e.getY());
+                    UtilThread.sleep(20);
+                    secondClick(component, ship, point);
+                }
+            }
+        });
     }
 
     private void secondClick(Component component, Ship ship, Point point) {
@@ -129,7 +127,7 @@ public class DisplacementPlay extends BackgroundPanel {
             public void mouseClicked(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     component.removeMouseMotionListener(this);
-                    selected = true;
+                    ship.setSelected2(true);
                 }
             }
         });

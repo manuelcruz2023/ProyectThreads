@@ -15,7 +15,9 @@ public interface Contract {
         public int setAparitionTime();
         public void updatePosition();
         public Dimension screenSize();
-        public void updateColitions();
+
+        public void updateTotalShipsOnScreen(int totalShips);
+        public void updateTotalShipsCrashed(int totalCrashed);
     }
 
     public interface Presenter {
@@ -25,25 +27,25 @@ public interface Contract {
         public int getVelocity();
         public int getAparitionTime();
 
-        public int getColitions();
-
         public void changePosition();
         public Dimension getScreenSize();
         public List<Ship> createShips();
         public void changeVelocity(Ship ship, int velocity);
         public void updateShipPosition(Ship ship, int x, int y);
         public void continueMovement(Ship ship, Point point);
-        public void updateColitions();
+
+        public void updateTotalShipsOnScreen();
+        public void updateTotalShipsCrashed();
     }
 
     public interface Model {
         public void setPresenter(Contract.Presenter presenter);
         public List<Ship> createShips();
-
-        public int setColitions();
-
         public void changeVelocity(Ship ship, int velocity);
         public void updateShipPosition(Ship ship, int x, int y);
         public void continueMovement(Ship ship, Point point);
+
+        int getTotalShipsOnScreen();
+        int getTotalShipsCrashed();
     }
 }

@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
@@ -15,7 +13,8 @@ import co.edu.uptc.views.resourcesView.BackgroundPanel;
 public class InformationPlay extends BackgroundPanel {
 
     private MainView mainView;
-    public int colitions = 0;
+    private JLabel labelMovementShips;
+    private JLabel labelCrashedShips;
 
     public InformationPlay(MainView mainView) {
         super("src\\main\\java\\co\\edu\\uptc\\images\\backgroundInformation.png");
@@ -71,50 +70,36 @@ public class InformationPlay extends BackgroundPanel {
     }
 
     private void addLabelMovementShips() {
-        JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS en movimiento: </div></html>");
-        label.setPreferredSize(new Dimension(100, 150));
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-        label.setForeground(Color.WHITE);
-        label.setBorder(new EmptyBorder(0, 30, 0, 30));
-        this.add(label);
+        labelMovementShips = new JLabel("<html><div style='text-align: center;'>OVNIS en movimiento: 0</div></html>");
+        labelMovementShips.setPreferredSize(new Dimension(100, 150));
+        labelMovementShips.setFont(new Font("Arial", Font.BOLD, 20));
+        labelMovementShips.setForeground(Color.WHITE);
+        labelMovementShips.setBorder(new EmptyBorder(0, 30, 0, 30));
+        this.add(labelMovementShips);
     }
 
     private void addLabelCrashedShips() {
-        JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: " +
-                colitions + "</div></html>");
-        label.setPreferredSize(new Dimension(100, 150));
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-        label.setForeground(Color.WHITE);
-        label.setBorder(new EmptyBorder(0, 30, 0, 30));
-        this.add(label);
+        labelCrashedShips = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: 0</div></html>");
+        labelCrashedShips.setPreferredSize(new Dimension(100, 150));
+        labelCrashedShips.setFont(new Font("Arial", Font.BOLD, 20));
+        labelCrashedShips.setForeground(Color.WHITE);
+        labelCrashedShips.setBorder(new EmptyBorder(0, 30, 0, 30));
+        this.add(labelCrashedShips);
     }
 
-<<<<<<< HEAD
-
-    private void getListShips() {
-        
-    }
-
-    private void addTableWithScroll() {
-        String[] columnNames = {"ID", "Cantidad de OVNIS"};
-        Object[][] data = {
-            {"1", }
-        };
-
-        JTable table = new JTable(data, columnNames);
-        table.setFillsViewportHeight(true);
-
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(300, 100));
-        this.add(scrollPane);
-    }
-=======
->>>>>>> f2f3bb01aee9b80e6ddf0038ed54a395d075943c
     private void addLabels() {
         addLabelNumShips();
         addLabelAparitionTime();
         addLabelVelocity();
         addLabelMovementShips();
         addLabelCrashedShips();
+    }
+
+    public void updateTotalShipsOnScreen(int totalShips) {
+        labelMovementShips.setText("<html><div style='text-align: center;'>OVNIS en movimiento: " + totalShips + "</div></html>");
+    }
+
+    public void updateTotalShipsCrashed(int totalCrashed) {
+        labelCrashedShips.setText("<html><div style='text-align: center;'>OVNIS estrellados: " + totalCrashed + "</div></html>");
     }
 }
