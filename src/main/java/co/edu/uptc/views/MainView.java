@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -14,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import co.edu.uptc.interfaces.Contract;
 import co.edu.uptc.views.dialogs.DialogPlay;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
@@ -74,7 +72,7 @@ public class MainView extends JFrame implements Contract.View {
         RoundedButton buttonStart = new RoundedButton("Iniciar Juego");
         buttonStart.setPreferredSize(new java.awt.Dimension(150, 50));
         buttonStart.addActionListener(e -> {
-            createDialogPLay();
+            createDialogPlay();
         });
         panel.add(buttonStart);
     }
@@ -86,6 +84,13 @@ public class MainView extends JFrame implements Contract.View {
             createInputPanel();
         });
         panel.add(buttonOptions);
+    }
+
+    private void createButtonExit() {
+        RoundedButton buttonExit = new RoundedButton("Salir");
+        buttonExit.setPreferredSize(new java.awt.Dimension(150, 50));
+        buttonExit.addActionListener(e -> System.exit(0));
+        panel.add(buttonExit);
     }
 
     private void createInputPanel() {
@@ -108,7 +113,7 @@ public class MainView extends JFrame implements Contract.View {
         UFOS.addItem("OVNI 1");
         UFOS.addItem("OVNI 2");
         UFOS.addItem("OVNI 3");
-        UFOS.setSelectedIndex(0);
+        UFOS.setSelectedItem(0);
         UFOS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,13 +134,16 @@ public class MainView extends JFrame implements Contract.View {
             case 3:
                 ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO3.png";
                 break;
+            default:
+                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO1.png";
+                break;
         }
     }
 
     private JPanel createPanel(JTextField numberOfShipsField, JTextField aparitionTimeField, JTextField velocityField,
-        JComboBox<String> UFOS) {
+            JComboBox<String> UFOS) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 2));
+        panel.setLayout(new GridLayout(5, 2));
         panel.add(new JLabel("Número de naves:"));
         panel.add(numberOfShipsField);
         panel.add(new JLabel("Tiempo de aparición de naves:"));
@@ -166,13 +174,6 @@ public class MainView extends JFrame implements Contract.View {
         }
     }
 
-    private void createButtonExit() {
-        RoundedButton buttonExit = new RoundedButton("Salir");
-        buttonExit.setPreferredSize(new java.awt.Dimension(150, 50));
-        buttonExit.addActionListener(e -> System.exit(0));
-        panel.add(buttonExit);
-    }
-
     private void addPanel() {
         panel.setOpaque(false);
         this.add(panel);
@@ -184,7 +185,7 @@ public class MainView extends JFrame implements Contract.View {
         createButtonExit();
     }
 
-    private void createDialogPLay() {
+    private void createDialogPlay() {
         dialogPlay = new DialogPlay(this);
         dialogPlay.begin();
     }
@@ -227,6 +228,6 @@ public class MainView extends JFrame implements Contract.View {
     }
 
     public int getColitions() {
-        return presenter.setColitions();
+        return presenter.getColitions();
     }
 }

@@ -4,13 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-
 import co.edu.uptc.views.MainView;
 import co.edu.uptc.views.resourcesView.BackgroundPanel;
 
@@ -43,7 +41,7 @@ public class InformationPlay extends BackgroundPanel {
 
     private void addLabelNumShips() {
         JLabel label = new JLabel("<html><div style='text-align: center;'>Número de OVNIS: " +
-                        mainView.numberOfShips + "</div></html>");
+                mainView.numberOfShips + "</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);
@@ -52,7 +50,8 @@ public class InformationPlay extends BackgroundPanel {
     }
 
     private void addLabelAparitionTime() {
-        JLabel label = new JLabel("<html><div style='text-align: center;'>Tiempo de aparición de OVNIS:" + mainView.aparitionTime + " ms</div></html>");
+        JLabel label = new JLabel("<html><div style='text-align: center;'>Tiempo de aparición de OVNIS:"
+                + mainView.aparitionTime + " ms</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);
@@ -61,7 +60,8 @@ public class InformationPlay extends BackgroundPanel {
     }
 
     private void addLabelVelocity() {
-        JLabel label = new JLabel("<html><div style='text-align: center;'>Velocidad de OVNIS: " + mainView.velocity + "ms</div></html>");
+        JLabel label = new JLabel(
+                "<html><div style='text-align: center;'>Velocidad de OVNIS: " + mainView.velocity + "ms</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);
@@ -80,7 +80,7 @@ public class InformationPlay extends BackgroundPanel {
 
     private void addLabelCrashedShips() {
         JLabel label = new JLabel("<html><div style='text-align: center;'>OVNIS estrellados: " +
-          mainView.getColitions() + "</div></html>");
+                mainView.getColitions() + "</div></html>");
         label.setPreferredSize(new Dimension(100, 150));
         label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setForeground(Color.WHITE);
@@ -88,6 +88,7 @@ public class InformationPlay extends BackgroundPanel {
         this.add(label);
     }
 
+<<<<<<< HEAD
 
     private void getListShips() {
         
@@ -106,6 +107,8 @@ public class InformationPlay extends BackgroundPanel {
         scrollPane.setPreferredSize(new Dimension(300, 100));
         this.add(scrollPane);
     }
+=======
+>>>>>>> f2f3bb01aee9b80e6ddf0038ed54a395d075943c
     private void addLabels() {
         addLabelNumShips();
         addLabelAparitionTime();
