@@ -35,7 +35,7 @@ public class DialogPlay extends JDialog {
 
     private void createDisplacementPlay() {
         displacementPlay = new DisplacementPlay(mainView, 
-        "src\\main\\java\\co\\edu\\uptc\\images\\fondoJuego.jpg", mainView.ufoPath);
+        "resources\\fondoJuego.jpg", mainView.ufoPath);
         this.add(displacementPlay,  BorderLayout.CENTER);
     }
 

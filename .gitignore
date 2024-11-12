@@ -35,3 +35,50 @@ build/
 *.jar
 *.dat
 *.txt
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración de IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+
+# Archivos generados de compilación
+/target/
+out/
+
+# Librerías descargadas por Maven
+/.mvn/
+**/mvnw
+**/mvnw.cmd
+.mvn/wrapper/maven-wrapper.jar
+
+# Archivos de log
+*.log
+
+# Archivos de configuración específicos de sistema
+*.properties
+*.yml
+*.yaml
+
+# Archivos de configuración de pruebas
+test-output/
+
+# Archivos generados de cobertura de código
+/coverage/
+.jacoco/
+
+# Archivos de caché
+*.class
+*.war
+*.ear
+*.jar
+
+# Configuración temporal
+tmp/
+temp/

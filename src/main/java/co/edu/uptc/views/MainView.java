@@ -55,7 +55,7 @@ public class MainView extends JFrame implements Contract.View {
 
     private void createContentPane() {
         BackgroundPanel backgroundPanel = new BackgroundPanel(
-                "src\\main\\java\\co\\edu\\uptc\\images\\inicioJuegoNaves.jpg");
+                "resources\\inicioJuegoNaves.jpg");
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
         this.setContentPane(backgroundPanel);
     }
@@ -84,6 +84,30 @@ public class MainView extends JFrame implements Contract.View {
             createInputPanel();
         });
         panel.add(buttonOptions);
+    }
+
+    private void createButtonManual() {
+        RoundedButton buttonManual = new RoundedButton("Manual");
+        buttonManual.setPreferredSize(new java.awt.Dimension(150, 50));
+        buttonManual.addActionListener(e -> {
+            addTextManual();
+        });
+        panel.add(buttonManual);
+    }
+
+    private void addTextManual() {
+        JOptionPane.showMessageDialog(null,
+                "(Las entradas para velocidady tiempo de aparicion están en millisegundos) \n" + 
+                "1. Ingrese el número de naves que desea que aparezcan en pantalla.\n"
+                    + "2. Ingrese el tiempo de aparición de las naves.\n"
+                    + "3. Ingrese la velocidad de las naves.\n"
+                    + "4. Seleccione el tipo de naves que desea que aparezcan.\n"
+                    + "5. Haga clic en el botón 'Iniciar Juego'.\n"
+                    + "6. Haga clic en el botón 'Opciones' para cambiar las opciones del juego.\n"
+                    + "7. Haga clic en el botón 'Salir' para cerrar el juego.\n"
+                    + "8. Una vez iniciado el juego, haga doble click derecho para aumentar o disminuir la velocidad de las naves. \n"
+                    + "9. Haga doble click izquierdo para mover usted la nave, para dejar de moverla de nuevamente click izquierdo. \n",
+                "Manual", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void createButtonExit() {
@@ -126,16 +150,16 @@ public class MainView extends JFrame implements Contract.View {
     private void selectedUFO() {
         switch (UFOS.getSelectedIndex()) {
             case 1:
-                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO1.png";
+                ufoPath = "resources\\UFO1.png";
                 break;
             case 2:
-                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO2.png";
+                ufoPath = "resources\\UFO2.png";
                 break;
             case 3:
-                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO3.png";
+                ufoPath = "resources\\UFO3.png";
                 break;
             default:
-                ufoPath = "src\\main\\java\\co\\edu\\uptc\\images\\UFO1.png";
+                ufoPath = "resources\\UFO1.png";
                 break;
         }
     }
@@ -183,6 +207,7 @@ public class MainView extends JFrame implements Contract.View {
         createButtonStart();
         createButtonOptions();
         createButtonExit();
+        createButtonManual();
     }
 
     private void createDialogPlay() {

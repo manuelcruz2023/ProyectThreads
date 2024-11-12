@@ -17,7 +17,7 @@ public class InformationPlay extends BackgroundPanel {
     private JLabel labelCrashedShips;
 
     public InformationPlay(MainView mainView) {
-        super("src\\main\\java\\co\\edu\\uptc\\images\\backgroundInformation.png");
+        super("resources\\backgroundInformation.png");
         this.mainView = mainView;
         initFrame();
         begin();

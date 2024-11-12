@@ -1,7 +1,6 @@
 package co.edu.uptc.interfaces;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.util.List;
 import co.edu.uptc.models.Ship;
 import co.edu.uptc.models.Trajectory;
